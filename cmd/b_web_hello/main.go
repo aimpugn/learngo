@@ -10,6 +10,9 @@ import (
 	"net/http"
 )
 
+/*
+모든 Go 프로그램은 main 함수에서 실행된다
+*/
 func main() {
 	http.HandleFunc("/hello", func(rw http.ResponseWriter, req *http.Request) {
 		name := req.URL.Query().Get("name")
