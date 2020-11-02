@@ -2,14 +2,17 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 )
 
 func main() {
-	fmt.Println("===========================================")
+	fmt.Println("==================ifElse======================")
 	ifElse()
-	fmt.Println("===========================================")
+	fmt.Println("==================forLoop======================")
 	forLoop()
+	fmt.Println("==================switchStmt======================")
+	switchStmt()
 }
 
 func ifElse() {
@@ -61,7 +64,7 @@ func forLoop() {
 		fmt.Print(strconv.Itoa(i) + delimiter)
 	}
 
-	fmt.Println("=================2nd=======================")
+	fmt.Println("=================2nd:break=======================")
 	for i := 0; i < 10; i++ {
 		if i > 7 {
 			break
@@ -69,7 +72,7 @@ func forLoop() {
 		fmt.Println(i)
 	}
 
-	fmt.Println("=================3rd=======================")
+	fmt.Println("=================3rd:continue=======================")
 	a := 3
 	for i := 0; i < 10; i++ {
 		if i == a {
@@ -78,7 +81,7 @@ func forLoop() {
 		fmt.Println(i)
 	}
 
-	fmt.Println("=================4th=======================")
+	fmt.Println("=================4th:while=======================")
 	// while이 따로 없고, for를 사용하면 된다
 	j := 0
 	for j < 10 {
@@ -87,6 +90,7 @@ func forLoop() {
 	}
 	fmt.Println(j)
 
+	fmt.Println("=================4th:while true=======================")
 	j = 0
 	for {
 		j++
@@ -96,6 +100,7 @@ func forLoop() {
 	}
 	fmt.Println(j) // 101
 
+	fmt.Println("=================5th:for range=======================")
 	s1 := "Hello, World!"
 	// multibyte 문자를 사용할 경우, 유효한 rune을 얻는 한 방법
 	for offset, valueInRune := range s1 {
@@ -127,5 +132,71 @@ func forLoop() {
 			4 32
 			5 127757 �
 		*/
+	}
+}
+
+func switchStmt() {
+	// 하나 또는 그 이상 else if를 사용한다면 instead 고려
+	// 커맨드 라인으로 전달되는 인자(argument) 사용
+	word := os.Args[1]
+	/*
+		if word == "hello" {
+			fmt.Println("Hi yourself")  // go run main.go hello
+		} else if word == "goodbye" {
+			fmt.Println("So long!")  // go run main.go goodbye
+		} else if word == "greetings" {
+			fmt.Println("Salutations!")  // go run main.go greetings
+		} else {
+			fmt.Println("I don't know what you said")  // go run main.go what?
+		}
+	*/
+
+	/*
+		Go에서는 단일 케이스에 대해서만 코드가 실행되며, break가 필요 없다
+		단, switch 문에서 비교하려는 값의 타입과 case 문장의 비교되는 값의 타입이 같아야 한다
+	*/
+	fmt.Println("=================1th:switch=======================")
+	greet := "greetings"
+	// if 문에서처럼, switch 내에서만 유효한 변수 선언 가능
+	switch l := len(word); word { //
+	case "hi":
+		fmt.Println("Very informal!")
+		// C나 Java에서처럼 단일 케이스에서 끝나지 않고 다음 케이스로 넘어가게 하고 싶을 경우 사용
+		fallthrough
+		/*
+			Very informal!
+			Hi yourself
+		*/
+	case "hello":
+		fmt.Println("Hi yourself") // go run main.go hello
+	case "goodbye", "bye": // 여러 값에 대해 같은 결과를 출력하고 싶으면, 콤마로 구별하여 여러 값을 나열한다
+		fmt.Println("So long!") // go run main.go goodbye
+	case "farewell":
+		// 아무 코드도 실행되지 않는다
+	case greet:
+		/*
+			C나 Java와 달리 Go에서는 비교하려는 값이 굳이 constant value일 필요 없으며,
+			어떤 타입의 값이든 비교 가능하다. 변수(variable), 상수(constant) 또는 literal value 모두 비교 가능
+		*/
+		fmt.Println("Salutations!") // go run main.go greetings
+	default:
+		fmt.Println("I don't know what you said, but iw was", l, "characters length") // go run main.go what?
+		// I don't know what you said, but iw was 5 characters length
+	}
+
+	fmt.Println("=================2nd:switch like if-else=======================")
+	c := "crackerjack"
+	switch l := len(word); { // case에서 비교를 하기 위해 word를 switch 문 조건에서는 제거. 이때 비교할 변수가 없어도 블록 스코프 변수 선언 시 세미콜론(;) 필수
+	case word == "hi":
+		fmt.Println("Very informal!")
+		fallthrough
+	case word == "hello":
+		fmt.Println("Hi yourself")
+	case l == 1:
+		fmt.Println("I don't know any one letter words")
+	case 1 < l && l < 10, word == c:
+		fmt.Println("This word is either", c, "or it is 2-9 characters long")
+	default:
+		fmt.Println("I don't know what you said, but iw was", l, "characters length") // go run main.go what?
 	}
 }
