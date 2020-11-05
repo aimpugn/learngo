@@ -41,6 +41,43 @@ $GOPATH(=workspace)
     │    ├── $PROJECT2_NAME
 ```
 
+### Go Module
+
+- Go module 생성
+```
+/mnt/c/Users/daybreak/GolandProjects/src/learngo$ go mod init github.com/aimpugn/learngo
+go: creating new go.mod: module github.com/aimpugn/learngo
+```
+
+- go.mod 파일 생성
+```
+module github.com/aimpugn/learngo
+
+go 1.14
+```
+
+- go test로 의존성 확인
+```
+/mnt/c/Users/daybreak/GolandProjects/src/learngo$ go test mod_test/hello2.go
+go: finding module for package rsc.io/quote
+go: downloading rsc.io/quote v1.5.2
+go: found rsc.io/quote in rsc.io/quote v1.5.2
+go: downloading rsc.io/sampler v1.3.0
+go: downloading golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c
+?       command-line-arguments  [no test files]
+
+```
+
+- go.mod 파일 내용 변경 확인
+```
+module github.com/aimpugn/learngo
+
+go 1.14
+
+require rsc.io/quote v1.5.2 // indirect
+
+```
+
 ## 기타 링크
 - https://stackoverflow.com/a/46663495/8562273
 - https://stackoverflow.com/a/49732445/8562273
