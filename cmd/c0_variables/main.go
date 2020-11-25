@@ -5,16 +5,18 @@ import (
 )
 
 func main() {
-	fmt.Println("===========================================")
+	fmt.Println("===================declareVariables===================")
 	declareVariables()
-	fmt.Println("===========================================")
+	fmt.Println("===================numericTypes===================")
 	numericTypes()
-	fmt.Println("===========================================")
+	fmt.Println("===================stringType===================")
 	stringType()
-	fmt.Println("===========================================")
+	fmt.Println("===================runeType===================")
 	runeType()
-	fmt.Println("===========================================")
+	fmt.Println("===================arrayType===================")
 	arrayType()
+	fmt.Println("===================sliceType===================")
+	sliceType()
 }
 
 func declareVariables() {
@@ -150,6 +152,7 @@ Hello,
 	b2String := string(b2)                      // 111 bytes => o
 	fmt.Println(s1, b1, b1String, b2, b2String) // Hello, World! 72 H 111 o
 	fmt.Println(s1, len(s1))                    // Hello, World! 13
+	// 	s1 = "Hello, World!"
 	s1Sub1 := s1[0:5]
 	fmt.Println(s1Sub1) // Hello
 	s1Sub2 := s1[7:12]
@@ -219,4 +222,16 @@ func arrayType() {
 		vals3[1] = 1
 		fmt.Println(vals3)  // panic: runtime error: index out of range [1] with length 0
 	*/
+}
+
+func sliceType() {
+	slice := make([]int, 0, 20)
+	slice = append(slice, 1, 2, 3, 4, 5)
+	fmt.Println(slice)
+	former := make([]int, 3)
+	copy(former, slice[:3])
+	latter := slice[3:]
+	fmt.Println(former, latter)
+	former = append(former, 10)
+	fmt.Println(former, latter, "original: ", slice)
 }

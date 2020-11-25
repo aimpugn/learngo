@@ -43,13 +43,13 @@ func reference() {
 
 func typePointer() {
 	/*
-			// 이 포인터에 초기값(zero value) 할당된다
-			// 어떤 타입을 가리키든, 모든 포인터는 같은 초기값(=nil)을 갖으며, 읽거나 쓸 수 없다
-			// nil은 메모리 위치가 없으며, 1의 부재(absence of 1)
-			var b *int
-	        fmt.Println(b)
-			fmt.Println(*b)  // panic: runtime error: invalid memory address or nil pointer dereference
-			// [signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x48d378]
+				// 이 포인터에 초기값(zero value) 할당된다
+				// 어떤 타입을 가리키든, 모든 포인터는 같은 초기값(=nil)을 갖으며, 읽거나 쓸 수 없다
+				// nil은 메모리 위치가 없으며, 1의 부재(absence of 1)
+				var b *int
+		        fmt.Println(b)
+				fmt.Println(*b)  // panic: runtime error: invalid memory address or nil pointer dereference
+				// [signal SIGSEGV: segmentation violation code=0x1 addr=0x0 pc=0x48d378]
 	*/
 	// 포인터를 만들기 위해 Go에 내장된 함수 사용 가능.
 	b := new(int) // 포인터 생성 + 메모리 할당
@@ -69,6 +69,18 @@ func interveneSetTo10ByPointer(a *int) {
 	*a = 10      // 새로운 포인터의 메모리에 10 저장
 }
 
+func reference1(a *[]int, b *int) {
+	tmp := *a
+	fmt.Println("a:", a, "*a:", *a, "tmp:", tmp, "b:", b, "*b:", *b)
+	reference2(a, b)
+}
+
+func reference2(c *[]int, d *int) {
+	tmp := *c
+	tmp[0], tmp[1] = tmp[1], tmp[0]
+	fmt.Println("a:", c, "*c:", *c, "tmp:", tmp, "d:", d, "*d:", *d)
+}
+
 func main() {
 	fmt.Println("=================reference=================")
 	reference()
@@ -86,4 +98,14 @@ func main() {
 	//          a에 대한 포인터(hexadecimal 메모리 위치)를 전달
 	interveneSetTo10ByPointer(&b)
 	fmt.Println(b) // 10
+	fmt.Println("=================nested reference=================")
+	arr := []int{
+		1,
+		2,
+		3,
+		4,
+		5,
+	}
+	a1 := 2
+	reference1(&arr, &a1)
 }

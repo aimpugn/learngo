@@ -12,7 +12,7 @@ func main() {
 	fmt.Println("==================forLoop======================")
 	forLoop()
 	fmt.Println("==================switchStmt======================")
-	switchStmt()
+	// switchStmt()
 }
 
 func ifElse() {
